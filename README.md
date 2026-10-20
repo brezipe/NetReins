@@ -49,6 +49,9 @@ all traffic flows normally again, even if it crashes.
 
 Running NetReins a second time just brings the existing window to the front.
 
+**About** in the tray icon menu shows the version, license, a link to this
+repository and the third-party components.
+
 **Units:** 1 Mb/s = 1,000,000 bits per second ≈ 122 kB/s, the same unit Windows
 Task Manager uses.
 

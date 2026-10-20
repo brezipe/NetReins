@@ -41,7 +41,7 @@ MUTEX_NAME = "Local\\NetReins.Instance"
 SHOW_EVENT_NAME = "Local\\NetReins.Show"
 
 
-def bring_to_front(root: tk.Tk) -> None:
+def bring_to_front(root: tk.Tk | tk.Toplevel) -> None:
     """Zobrazí okno a dostane ho do popředí i přes ochranu Windows proti
     „kradení fokusu“ (typicky po potvrzení UAC okno zůstane vzadu)."""
     root.deiconify()

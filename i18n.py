@@ -59,7 +59,25 @@ STRINGS: dict[str, dict[str, str]] = {
         "cs": "Běží dál na pozadí a omezení zůstávají aktivní. "
               "Ukončit: pravé tlačítko na ikoně → Ukončit.",
     },
+    "about_title": {"en": "About NetReins", "cs": "O programu NetReins"},
+    "about_version": {"en": "Version {version}", "cs": "Verze {version}"},
+    "about_description": {
+        "en": "Per-process network monitor and bandwidth limiter for Windows. "
+              "Shows which programs use the network and lets you cap their download and upload speed.",
+        "cs": "Monitor a omezovač síťového provozu jednotlivých procesů pro Windows. "
+              "Ukazuje, které programy používají síť, a umí omezit jejich rychlost stahování a odesílání.",
+    },
+    "about_license": {
+        "en": "Free and open source software, MIT License",
+        "cs": "Svobodný software s otevřeným kódem, licence MIT",
+    },
+    "about_source": {"en": "Source code on GitHub", "cs": "Zdrojový kód na GitHubu"},
+    "about_issues": {"en": "Report a problem", "cs": "Nahlásit problém"},
+    "about_components": {"en": "THIRD-PARTY COMPONENTS", "cs": "KOMPONENTY TŘETÍCH STRAN"},
+    "about_notices": {"en": "Full license notices", "cs": "Úplné licenční informace"},
+    "about_close": {"en": "Close", "cs": "Zavřít"},
     "tray_open": {"en": "Open", "cs": "Otevřít"},
+    "tray_about": {"en": "About", "cs": "O programu"},
     "tray_clear_all": {"en": "Remove all limits", "cs": "Zrušit všechna omezení"},
     "tray_quit": {"en": "Quit", "cs": "Ukončit"},
     "need_admin": {

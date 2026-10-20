@@ -81,6 +81,12 @@ def apply_theme(root: tk.Tk) -> None:
                     font=("Segoe UI Semibold", 9))
     style.map("LangOn.TButton", background=[("active", ACCENT_HOVER)])
 
+    # odkazy v okně O programu
+    style.configure("Link.TLabel", background=BG, foreground=ACCENT, font=FONT)
+    style.map("Link.TLabel", foreground=[("active", ACCENT_HOVER)])
+    style.configure("LinkSmall.TLabel", background=BG, foreground=ACCENT, font=FONT_SMALL)
+    style.map("LinkSmall.TLabel", foreground=[("active", ACCENT_HOVER)])
+
     style.configure("TEntry", fieldbackground=FIELD, foreground=FG, bordercolor=BORDER,
                     lightcolor=FIELD, darkcolor=FIELD, padding=(8, 5), insertcolor=FG)
     style.map("TEntry", bordercolor=[("focus", ACCENT)], lightcolor=[("focus", ACCENT)])
