@@ -10,6 +10,7 @@ import queue
 import tkinter as tk
 from tkinter import messagebox, ttk
 
+import about
 import i18n
 import settings
 import theme
@@ -87,6 +88,7 @@ class NetReinsApp:
         self._tray_commands: queue.Queue = queue.Queue()
         self.tray = tray.Tray(self._tray_commands)
         self._tray_hint_shown = False
+        self._about: about.AboutDialog | None = None
 
         # stav ovládacích prvků žije mimo widgety, aby přežil přepnutí jazyka
         self.show_idle = tk.BooleanVar(value=False)
@@ -126,6 +128,8 @@ class NetReinsApp:
 
         langs = ttk.Frame(header)
         langs.pack(side=tk.RIGHT, anchor=tk.N, padx=(14, 0))
+        ttk.Button(langs, text="ⓘ", style="Info.TButton", width=3,
+                   command=self.show_about).pack(side=tk.LEFT, padx=(0, 8))
         for lang in i18n.LANGUAGES:
             style = "LangOn.TButton" if lang == i18n.get_language() else "Lang.TButton"
             ttk.Button(langs, text=i18n.LABELS[lang], style=style, width=3,
@@ -203,6 +207,12 @@ class NetReinsApp:
 
     def _save_to_tray(self) -> None:
         settings.save({**settings.load(), "to_tray": self.to_tray.get()})
+
+    def show_about(self) -> None:
+        if self._about is not None and self._about.exists():
+            self._about.win.lift()
+            return
+        self._about = about.AboutDialog(self.root)
 
     # ---------------------------------------------------------------- jazyk
     def set_language(self, lang: str) -> None:

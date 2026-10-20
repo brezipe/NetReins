@@ -49,6 +49,9 @@ jen za běhu programu. Po ukončení jde provoz normálně dál, i kdyby program
 
 Druhé spuštění jen přenese do popředí okno té běžící kopie.
 
+Tlačítko **ⓘ** vedle přepínače jazyka ukáže verzi, licenci, odkaz na tento
+repozitář a použité komponenty třetích stran.
+
 **Jednotky:** 1 Mb/s = 1 000 000 bitů za sekundu ≈ 122 kB/s, stejně jako ve
 Správci úloh.
 

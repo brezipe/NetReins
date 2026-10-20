@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0 – 2026-10-20
+
+- About window (ⓘ button next to the language switch): version, author, license,
+  link to the source code and issue tracker, third-party components and their licenses
+- Release checksum file uses LF line endings, so `sha256sum -c` works
+
 ## 1.0.0 – 2026-10-20
 
 First public release.
