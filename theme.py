@@ -81,11 +81,6 @@ def apply_theme(root: tk.Tk) -> None:
                     font=("Segoe UI Semibold", 9))
     style.map("LangOn.TButton", background=[("active", ACCENT_HOVER)])
 
-    # tlačítko ⓘ – větší písmo, stejná výška jako přepínač jazyka
-    style.configure("Info.TButton", background=SURFACE, foreground=MUTED, padding=(6, 0),
-                    font=("Segoe UI Semibold", 12))
-    style.map("Info.TButton", background=[("active", SURFACE_HI)], foreground=[("active", FG)])
-
     # odkazy v okně O programu
     style.configure("Link.TLabel", background=BG, foreground=ACCENT, font=FONT)
     style.map("Link.TLabel", foreground=[("active", ACCENT_HOVER)])

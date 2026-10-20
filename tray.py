@@ -16,6 +16,7 @@ from i18n import t
 log = logging.getLogger(__name__)
 
 SHOW = "show"
+ABOUT = "about"
 CLEAR_ALL = "clear_all"
 QUIT = "quit"
 
@@ -53,6 +54,7 @@ class Tray:
 
         menu = pystray.Menu(
             pystray.MenuItem(text("tray_open"), cmd(SHOW), default=True),  # default = levý klik
+            pystray.MenuItem(text("tray_about"), cmd(ABOUT)),
             pystray.MenuItem(text("tray_clear_all"), cmd(CLEAR_ALL)),
             pystray.Menu.SEPARATOR,
             pystray.MenuItem(text("tray_quit"), cmd(QUIT)),

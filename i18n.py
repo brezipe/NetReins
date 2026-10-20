@@ -59,7 +59,6 @@ STRINGS: dict[str, dict[str, str]] = {
         "cs": "Běží dál na pozadí a omezení zůstávají aktivní. "
               "Ukončit: pravé tlačítko na ikoně → Ukončit.",
     },
-    "about_button": {"en": "About", "cs": "O programu"},
     "about_title": {"en": "About NetReins", "cs": "O programu NetReins"},
     "about_version": {"en": "Version {version}", "cs": "Verze {version}"},
     "about_description": {
@@ -78,6 +77,7 @@ STRINGS: dict[str, dict[str, str]] = {
     "about_notices": {"en": "Full license notices", "cs": "Úplné licenční informace"},
     "about_close": {"en": "Close", "cs": "Zavřít"},
     "tray_open": {"en": "Open", "cs": "Otevřít"},
+    "tray_about": {"en": "About", "cs": "O programu"},
     "tray_clear_all": {"en": "Remove all limits", "cs": "Zrušit všechna omezení"},
     "tray_quit": {"en": "Quit", "cs": "Ukončit"},
     "need_admin": {

@@ -7,6 +7,7 @@ import webbrowser
 from tkinter import ttk
 
 import theme
+import winutil
 from i18n import t
 from version import APP_NAME, AUTHOR, COPYRIGHT_YEAR, REPO_URL, __version__
 
@@ -23,14 +24,21 @@ THIRD_PARTY = (
 
 
 class AboutDialog:
-    """Modální okno. Zavírá se tlačítkem, klávesou Esc nebo křížkem."""
+    """Okno O programu. Zavírá se tlačítkem, klávesou Esc nebo křížkem.
+
+    Je-li hlavní okno vidět, je About modální a vycentrované nad ním. Je-li
+    hlavní okno skryté v trayi (otevřeno z menu ikony), je About samostatné
+    okno uprostřed obrazovky – okno svázané se skrytým rodičem by Windows
+    nezobrazily."""
 
     def __init__(self, root: tk.Tk):
         self.win = win = tk.Toplevel(root)
+        self._modal = root.state() != "withdrawn"
         win.title(t("about_title"))
         win.configure(background=theme.BG)
         win.resizable(False, False)
-        win.transient(root)
+        if self._modal:
+            win.transient(root)
         try:
             win.iconbitmap(theme.resource_path("icon.ico"))
         except tk.TclError:
@@ -78,7 +86,9 @@ class AboutDialog:
         win.protocol("WM_DELETE_WINDOW", self.close)
         self._center_on(root)
         theme.dark_title_bar(win)
-        win.grab_set()
+        if self._modal:
+            win.grab_set()
+        winutil.bring_to_front(win)
         close.focus_set()
 
     def _link(self, parent, text: str, url: str, small: bool = False) -> ttk.Label:
@@ -90,8 +100,12 @@ class AboutDialog:
     def _center_on(self, root: tk.Tk) -> None:
         self.win.update_idletasks()
         w, h = self.win.winfo_reqwidth(), self.win.winfo_reqheight()
-        x = root.winfo_rootx() + (root.winfo_width() - w) // 2
-        y = root.winfo_rooty() + (root.winfo_height() - h) // 3
+        if self._modal:
+            x = root.winfo_rootx() + (root.winfo_width() - w) // 2
+            y = root.winfo_rooty() + (root.winfo_height() - h) // 3
+        else:
+            x = (self.win.winfo_screenwidth() - w) // 2
+            y = (self.win.winfo_screenheight() - h) // 3
         self.win.geometry(f"+{max(x, 0)}+{max(y, 0)}")
 
     def exists(self) -> bool:
@@ -102,7 +116,8 @@ class AboutDialog:
 
     def close(self) -> None:
         try:
-            self.win.grab_release()
+            if self._modal:
+                self.win.grab_release()
             self.win.destroy()
         except tk.TclError:
             pass

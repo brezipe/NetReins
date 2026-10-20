@@ -111,3 +111,26 @@ def test_third_party_list_matches_notices():
     notices = open("THIRD_PARTY_NOTICES.md", encoding="utf-8").read()
     for name, _license in about.THIRD_PARTY:
         assert name.split(",")[0] in notices
+
+
+def test_tray_menu_command_opens_about_with_hidden_window(app):
+    import tray
+
+    assert app.root.state() == "withdrawn"  # okno skryté v trayi
+    app._tray_commands.put(tray.ABOUT)
+    app._poll_tray()
+    assert app._about.exists()
+    assert app._about.win.state() == "normal"
+    assert app._about._modal is False
+    assert app.root.grab_current() is None  # neblokuje hlavní okno
+
+
+def test_about_is_modal_over_visible_window(app):
+    app.root.deiconify()
+    app.root.update()
+    app.show_about()
+    assert app._about._modal is True
+
+
+def test_header_has_no_info_button(app):
+    assert "ⓘ" not in texts(app.root)

@@ -128,8 +128,6 @@ class NetReinsApp:
 
         langs = ttk.Frame(header)
         langs.pack(side=tk.RIGHT, anchor=tk.N, padx=(14, 0))
-        ttk.Button(langs, text="ⓘ", style="Info.TButton", width=3,
-                   command=self.show_about).pack(side=tk.LEFT, padx=(0, 8))
         for lang in i18n.LANGUAGES:
             style = "LangOn.TButton" if lang == i18n.get_language() else "Lang.TButton"
             ttk.Button(langs, text=i18n.LABELS[lang], style=style, width=3,
@@ -210,7 +208,7 @@ class NetReinsApp:
 
     def show_about(self) -> None:
         if self._about is not None and self._about.exists():
-            self._about.win.lift()
+            winutil.bring_to_front(self._about.win)
             return
         self._about = about.AboutDialog(self.root)
 
@@ -413,6 +411,8 @@ class NetReinsApp:
                 cmd = self._tray_commands.get_nowait()
                 if cmd == tray.SHOW:
                     self.show_window()
+                elif cmd == tray.ABOUT:
+                    self.show_about()
                 elif cmd == tray.CLEAR_ALL:
                     self.clear_all_limits()
                 elif cmd == tray.QUIT:
