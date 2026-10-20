@@ -1,0 +1,65 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Check that the tag matches version.py
+        shell: python
+        run: |
+          import os, sys
+          sys.path.insert(0, ".")
+          from version import __version__
+          tag = os.environ["GITHUB_REF_NAME"]
+          if tag != f"v{__version__}":
+              sys.exit(f"Tag {tag} does not match version.py ({__version__})")
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Run tests
+        run: python -m pytest -v
+
+      - name: Build exe
+        shell: cmd
+        run: build_exe.bat
+
+      - name: Checksum and release notes
+        shell: python
+        run: |
+          import hashlib, os, re
+          exe = "dist/NetReins.exe"
+          digest = hashlib.sha256(open(exe, "rb").read()).hexdigest()
+          open(exe + ".sha256", "w").write(f"{digest}  NetReins.exe\n")
+          version = os.environ["GITHUB_REF_NAME"].lstrip("v")
+          changelog = open("CHANGELOG.md", encoding="utf-8").read()
+          match = re.search(rf"^## {re.escape(version)}\b.*?\n(.*?)(?=^## |\Z)", changelog, re.S | re.M)
+          notes = match.group(1).strip() if match else ""
+          notes += (
+              "\n\n### Download\n\n"
+              "`NetReins.exe` – Windows 10/11, 64-bit. Asks for administrator rights on start.\n\n"
+              f"SHA-256: `{digest}`\n"
+          )
+          open("release_notes.md", "w", encoding="utf-8").write(notes)
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          gh release create "${{ github.ref_name }}"
+          dist/NetReins.exe dist/NetReins.exe.sha256
+          --title "NetReins ${{ github.ref_name }}"
+          --notes-file release_notes.md
