@@ -43,7 +43,8 @@ jobs:
           import hashlib, os, re
           exe = "dist/NetReins.exe"
           digest = hashlib.sha256(open(exe, "rb").read()).hexdigest()
-          open(exe + ".sha256", "w").write(f"{digest}  NetReins.exe\n")
+          # LF, aby šel soubor ověřit i přes `sha256sum -c`
+          open(exe + ".sha256", "w", newline="\n").write(f"{digest}  NetReins.exe\n")
           version = os.environ["GITHUB_REF_NAME"].lstrip("v")
           changelog = open("CHANGELOG.md", encoding="utf-8").read()
           match = re.search(rf"^## {re.escape(version)}\b.*?\n(.*?)(?=^## |\Z)", changelog, re.S | re.M)
